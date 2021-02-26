@@ -10,7 +10,7 @@ class ApiService @Inject constructor(
     private val apiClient: ApiClient
 ) : BaseApiService() {
 
-    suspend fun login(perPage: Int, since: Int) =
+    suspend fun getUsers(perPage: Int, since: Int) =
         getResult {
             apiClient.getUsers(perPage, since)
         }
