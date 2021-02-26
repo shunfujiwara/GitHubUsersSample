@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">GitHubUsersSample</string>
+
+  <string name="api_domain">https://api.github.com</string>
+</resources>

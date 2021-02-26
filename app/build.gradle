@@ -1,0 +1,110 @@
+plugins {
+  id 'com.android.application'
+  id 'kotlin-android'
+  id 'kotlin-kapt'
+  id 'dagger.hilt.android.plugin'
+}
+
+android {
+  compileSdkVersion 29
+
+  defaultConfig {
+    applicationId "jp.sfujiwara.githubuserssample"
+    minSdkVersion 26
+    targetSdkVersion 29
+    versionCode 1
+    versionName "1.0.0"
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    resConfigs "en", "ja"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled true
+      shrinkResources true
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+    debug {
+      applicationIdSuffix ".debug"
+    }
+  }
+  flavorDimensions "env"
+  productFlavors {
+    dev {
+      resConfigs("ja", "xhdpi")
+      dimension "env"
+    }
+    prod {
+      dimension "env"
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  packagingOptions {
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+    exclude 'LICENSE.txt'
+    exclude 'META-INF/rxjava.properties'
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/MANIFEST.MF'
+  }
+  dataBinding {
+    enabled = true
+  }
+  lintOptions {
+    abortOnError false
+    xmlReport true
+    enable 'Interoperability'
+    disable 'NeedOnRequestPermissionsResult'
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
+}
+
+dependencies {
+
+  //Hilt
+  implementation "com.google.dagger:hilt-android:$dagger_hilt_version"
+  kapt "com.google.dagger:hilt-android-compiler:$dagger_hilt_version"
+
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation 'androidx.core:core-ktx:1.3.2'
+  implementation 'androidx.appcompat:appcompat:1.2.0'
+  implementation 'com.google.android.material:material:1.3.0'
+  implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+  implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
+  implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
+  implementation 'androidx.fragment:fragment-ktx:1.3.0'
+
+  // Network
+  implementation 'com.google.code.gson:gson:2.8.6'
+  implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+  implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+  implementation 'com.squareup.okhttp3:okhttp:3.12.12'
+  implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+  implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
+  implementation 'io.coil-kt:coil:1.1.1'
+
+  // browser
+  implementation 'androidx.browser:browser:1.3.0'
+
+  // Logger
+  implementation 'com.jakewharton.timber:timber:4.7.1'
+
+  // Android Architecture Components
+  implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+  implementation 'androidx.lifecycle:lifecycle-runtime:2.3.0'
+  annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.3.0'
+
+  // For Devellop
+  implementation 'com.readystatesoftware.chuck:library:1.1.0'
+  implementation 'com.orhanobut:logger:2.2.0'
+
+  testImplementation 'junit:junit:4.+'
+  androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+  androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
