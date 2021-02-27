@@ -24,5 +24,17 @@ data class User(
     @SerializedName("events_url") var eventsUrl: String? = null,
     @SerializedName("received_events_url") var receivedEventsUrl: String? = null,
     @SerializedName("type") var type: String? = null,
-    @SerializedName("site_admin") var siteAdmin: Boolean? = null
+    @SerializedName("site_admin") var siteAdmin: Boolean? = null,
+    @SerializedName("name") var name: String? = null,
+    @SerializedName("company") var company: String? = null,
+    @SerializedName("blog") var blog: String? = null,
+    @SerializedName("location") var location: String? = null,
+    @SerializedName("email") var email: String? = null,
+    @SerializedName("hireable") var hireable: String? = null,
+    @SerializedName("bio") var bio: String? = null,
+    @SerializedName("twitter_username") var twitterUsername: String? = null,
+    @SerializedName("public_repos") var publicRepos: String? = null,
+    @SerializedName("public_gists") var publicGists: String? = null,
+    @SerializedName("followers") var followers: Int = 0,
+    @SerializedName("following") var following: Int = 0
 )

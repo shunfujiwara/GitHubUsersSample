@@ -2,4 +2,12 @@
   <string name="app_name">GitHubUsersSample</string>
 
   <string name="api_domain">https://api.github.com</string>
+  <string name="label_follow">Follow</string>
+  <string name="label_follower">Follower</string>
+
+  <string name="label_lang">Languages: &lt;strong&gt;%1$s&lt;/strong&gt;</string>
+  <string name="label_star">Stars: &lt;strong&gt;%1$d&lt;/strong&gt;</string>
+  <string name="label_watch">Watches: &lt;strong&gt;%1$d&lt;/strong&gt;</string>
+  <string name="label_forks">Forks: &lt;strong&gt;%1$d&lt;/strong&gt;</string>
+
 </resources>

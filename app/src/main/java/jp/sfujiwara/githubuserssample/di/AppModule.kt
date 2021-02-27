@@ -2,6 +2,9 @@ package jp.sfujiwara.githubuserssample.di
 
 import android.content.Context
 import androidx.databinding.library.BuildConfig
+import coil.Coil
+import coil.ImageLoader
+import coil.util.CoilUtils
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -31,6 +34,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideHttpClient(
+        @ApplicationContext context: Context,
         interceptor: ApiRequestInterceptor
     ): OkHttpClient {
         val logging = HttpLoggingInterceptor()
@@ -41,6 +45,7 @@ object AppModule {
             .readTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
             .addInterceptor(logging)
+            .cache(CoilUtils.createDefaultCache(context))
             .build()
     }
 
@@ -65,5 +70,22 @@ object AppModule {
     @Singleton
     @Provides
     fun provideApiService(apiClient: ApiClient) = ApiService(apiClient)
+
+    @Singleton
+    @Provides
+    fun provideImageLoader(@ApplicationContext context: Context,
+                           client: OkHttpClient) : ImageLoader {
+        val imageLoader = ImageLoader.Builder(context)
+            .crossfade(true)
+            .okHttpClient {
+                OkHttpClient.Builder()
+                    .cache(CoilUtils.createDefaultCache(context))
+                    .build()
+            }
+            .build()
+        Coil.setImageLoader(imageLoader)
+
+        return imageLoader
+    }
 
 }

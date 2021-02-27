@@ -8,7 +8,15 @@
   <color name="black">#FF000000</color>
   <color name="white">#FFFFFFFF</color>
 
+  <color name="primary_color">#FF5722</color>
+  <color name="primary_color_variant">#E64A19</color>
+  <color name="secondary_color">#29B6F6</color>
+  <color name="secondary_color_variant">#3F51B5</color>
+
   <color name="divider_color">#dddddd</color>
   <color name="place_holder">#dddddd</color>
+  <color name="color_gray">#eeeeee</color>
+  <color name="color_dark_gray">#666666</color>
+  <color name="user_image_mask">#50FF5722</color>
 
 </resources>

@@ -1,9 +1,14 @@
 package jp.sfujiwara.githubuserssample
 
 import android.app.Application
+import coil.Coil
+import coil.ImageLoader
+import coil.transform.CircleCropTransformation
+import coil.util.CoilUtils
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.HiltAndroidApp
+import okhttp3.OkHttpClient
 import timber.log.Timber
 
 
@@ -14,6 +19,21 @@ import timber.log.Timber
 class App: Application(){
     override fun onCreate() {
         super.onCreate()
+
+        ImageLoader(applicationContext)
+
+        val imageLoader = ImageLoader.Builder(applicationContext)
+            .crossfade(true)
+            .placeholder(R.drawable.place_holder)
+            .availableMemoryPercentage(0.1)
+            .bitmapPoolPercentage(0.1)
+            .okHttpClient {
+                OkHttpClient.Builder()
+                    .cache(CoilUtils.createDefaultCache(applicationContext))
+                    .build()
+            }
+            .build()
+        Coil.setImageLoader(imageLoader)
 
         // Logger
         if (BuildConfig.DEBUG) {

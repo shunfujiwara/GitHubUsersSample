@@ -8,18 +8,23 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import jp.sfujiwara.githubuserssample.ui.view.MoreLoadRecyclerView
-import jp.sfujiwara.githubuserssample.ui.viewmodel.UserListViewModel
+import jp.sfujiwara.githubuserssample.ui.viewmodel.FollowerUserListViewModel
 
 
 @AndroidEntryPoint
-class UserListFragment : BaseUserListFragment() {
+class FollowerUserListFragment : BaseUserListFragment() {
 
     companion object {
-        fun newInstance() =
-            UserListFragment()
+        private const val LOGIN = "login"
+        fun newInstance(login: String) =
+            FollowerUserListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(LOGIN, login)
+                }
+            }
     }
 
-    private val viewModel by viewModels<UserListViewModel>()
+    private val viewModel by viewModels<FollowerUserListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +34,14 @@ class UserListFragment : BaseUserListFragment() {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
         viewModelInit()
-        viewModel.getUsers()
+
+        val login = arguments?.getString(LOGIN)
+        if (login.isNullOrEmpty()) {
+            //TODO エラー
+        } else {
+            viewModel.init(login)
+            viewModel.getFollowUsers()
+        }
         return view
     }
 
