@@ -10,4 +10,6 @@
   <string name="label_watch">Watches: &lt;strong&gt;%1$d&lt;/strong&gt;</string>
   <string name="label_forks">Forks: &lt;strong&gt;%1$d&lt;/strong&gt;</string>
 
+  <string name="error_message">予期せぬエラーが発生しました</string>
+
 </resources>

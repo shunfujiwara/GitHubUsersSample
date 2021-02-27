@@ -47,8 +47,8 @@ class UserListFragment : BaseUserListFragment() {
         })
 
         // APIエラー表示用のSnaclbar
-//        viewModel.showMessageAction.observe(viewLifecycleOwner, Observer {
-//            showMessage(binding.root, it)
-//        })
+        viewModel.showMessageAction.observe(viewLifecycleOwner, Observer {
+            showMessage(binding.root, it)
+        })
     }
 }

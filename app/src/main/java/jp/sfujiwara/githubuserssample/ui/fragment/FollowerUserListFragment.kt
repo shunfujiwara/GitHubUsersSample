@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
+import jp.sfujiwara.githubuserssample.R
 import jp.sfujiwara.githubuserssample.ui.view.MoreLoadRecyclerView
 import jp.sfujiwara.githubuserssample.ui.viewmodel.FollowerUserListViewModel
 
@@ -37,7 +38,7 @@ class FollowerUserListFragment : BaseUserListFragment() {
 
         val login = arguments?.getString(LOGIN)
         if (login.isNullOrEmpty()) {
-            //TODO エラー
+            showMessage(binding.root, getString(R.string.error_message))
         } else {
             viewModel.init(login)
             viewModel.getFollowUsers()
@@ -59,8 +60,8 @@ class FollowerUserListFragment : BaseUserListFragment() {
         })
 
         // APIエラー表示用のSnaclbar
-//        viewModel.showMessageAction.observe(viewLifecycleOwner, Observer {
-//            showMessage(binding.root, it)
-//        })
+        viewModel.showMessageAction.observe(viewLifecycleOwner, Observer {
+            showMessage(binding.root, it)
+        })
     }
 }

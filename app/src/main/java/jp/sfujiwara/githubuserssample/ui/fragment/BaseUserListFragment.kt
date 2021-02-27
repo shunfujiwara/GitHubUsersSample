@@ -21,7 +21,7 @@ import jp.sfujiwara.githubuserssample.ui.adapter.UserListAdapter
 /**
  * Created by shn on 2021/02/27
  */
-abstract class BaseUserListFragment : Fragment(), OnCellClickListener<User> {
+abstract class BaseUserListFragment : BaseFragment(), OnCellClickListener<User> {
 
     protected val adapter = UserListAdapter(arrayListOf(), this)
     protected lateinit var binding: UserListFragmentBinding

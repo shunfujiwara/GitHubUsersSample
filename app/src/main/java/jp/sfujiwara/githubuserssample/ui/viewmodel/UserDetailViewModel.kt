@@ -52,9 +52,10 @@ class UserDetailViewModel@Inject constructor(private val repository: UserDetailR
                             return@onSuccess
                         }
                         userDetail.value = it.data!!
+                        getRepos()
 
                     } else if (it?.status == Resource.Status.NOT_FOUND) {
-                        //TODO NOTFOUND
+                        showMessageAction.value = "User Not Found"
                     } else {
                         // エラー
                         val errorMessage = if (it?.message != null) {
@@ -72,7 +73,7 @@ class UserDetailViewModel@Inject constructor(private val repository: UserDetailR
         }
     }
 
-    fun getRepos() {
+    private fun getRepos() {
         page++
         isLoading = true
 
@@ -90,6 +91,9 @@ class UserDetailViewModel@Inject constructor(private val repository: UserDetailR
                     if (it?.status == Resource.Status.SUCCESS) {
                         if (it.data.isNullOrEmpty()) {
                             isLoadAll = true
+                            if (reposItems.value?.isNullOrEmpty() == true) {
+                                showMessageAction.value = "Repository is Empty"
+                            }
                             return@onSuccess
                         }
                         if (!reposItems.value.isNullOrEmpty()) {
@@ -100,7 +104,6 @@ class UserDetailViewModel@Inject constructor(private val repository: UserDetailR
                             // データがなければ代入
                             reposItems.value = it.data!!
                         }
-                        Timber.d("COUNT = " + reposItems?.value?.size)
                     } else if (it?.status == Resource.Status.NOT_FOUND) {
                         // すべて読み込んだと判定する
                         isLoadAll = true

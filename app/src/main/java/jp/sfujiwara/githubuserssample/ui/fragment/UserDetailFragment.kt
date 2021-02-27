@@ -31,7 +31,7 @@ import jp.sfujiwara.githubuserssample.util.IntentUtil
  * Created by shn on 2021/02/26
  */
 @AndroidEntryPoint
-class UserDetailFragment : Fragment(), OnCellClickListener<Repos> {
+class UserDetailFragment : BaseFragment(), OnCellClickListener<Repos> {
 
     companion object {
         private const val LOGIN = "login"
@@ -59,12 +59,6 @@ class UserDetailFragment : Fragment(), OnCellClickListener<Repos> {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        arguments?.getString(LOGIN)?.let {
-            viewModel.init(it)
-            viewModel.getUserDetail()
-            viewModel.getRepos()
-        }
-
         binding.userThumbnailImage.transitionName = arguments?.getString(TRANSITION_NAME)
         //Shared Element用にユーザー画像のみ前画面から流用する
         arguments?.getString(AVATAR_URL)?.let {
@@ -82,6 +76,11 @@ class UserDetailFragment : Fragment(), OnCellClickListener<Repos> {
             }
         }
         viewInit()
+
+        arguments?.getString(LOGIN)?.let {
+            viewModel.init(it)
+            viewModel.getUserDetail()
+        }
 
         return binding.root
     }
@@ -119,9 +118,9 @@ class UserDetailFragment : Fragment(), OnCellClickListener<Repos> {
         })
 
         // APIエラー表示用のSnaclbar
-//        viewModel.showMessageAction.observe(viewLifecycleOwner, Observer {
-//            showMessage(binding.root, it)
-//        })
+        viewModel.showMessageAction.observe(viewLifecycleOwner, Observer {
+            showMessage(binding.root, it)
+        })
 
         arguments?.getString(LOGIN)?.let { login ->
             binding.followParent.setOnClickListener(View.OnClickListener {
