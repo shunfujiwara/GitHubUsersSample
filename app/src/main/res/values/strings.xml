@@ -6,9 +6,9 @@
   <string name="label_follower">Follower</string>
 
   <string name="label_lang">Languages: &lt;strong&gt;%1$s&lt;/strong&gt;</string>
-  <string name="label_star">Stars: &lt;strong&gt;%1$d&lt;/strong&gt;</string>
-  <string name="label_watch">Watches: &lt;strong&gt;%1$d&lt;/strong&gt;</string>
-  <string name="label_forks">Forks: &lt;strong&gt;%1$d&lt;/strong&gt;</string>
+  <string name="label_star">Stars: &lt;strong&gt;%1$s&lt;/strong&gt;</string>
+  <string name="label_watch">Watches: &lt;strong&gt;%1$s&lt;/strong&gt;</string>
+  <string name="label_forks">Forks: &lt;strong&gt;%1$s&lt;/strong&gt;</string>
 
   <string name="error_message">予期せぬエラーが発生しました</string>
 

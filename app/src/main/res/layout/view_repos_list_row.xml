@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="java.text.NumberFormat" />
         <import type="android.text.Html" />
+        <import type="android.view.View" />
 
         <variable
             name="repos"
@@ -48,6 +49,7 @@
             android:textSize="14sp"
             android:maxLines="1"
             android:ellipsize="end"
+            android:visibility="@{(repos.language == null || repos.language == &quot;null&quot;)? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toStartOf="@+id/repos_watch_count"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/repos_name"
@@ -59,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@{Html.fromHtml(String.format(@string/label_star, repos.stargazersCount))}"
+            android:text="@{Html.fromHtml(String.format(@string/label_star, NumberFormat.getNumberInstance().format(repos.stargazersCount)))}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Stars: 111" />
@@ -69,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="@{Html.fromHtml(String.format(@string/label_watch, repos.watchersCount))}"
+            android:text="@{Html.fromHtml(String.format(@string/label_watch, NumberFormat.getNumberInstance().format(repos.watchersCount)))}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -81,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="@{Html.fromHtml(String.format(@string/label_forks, repos.forksCount))}"
+            android:text="@{Html.fromHtml(String.format(@string/label_forks, NumberFormat.getNumberInstance().format(repos.forksCount)))}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Forks: 333" />

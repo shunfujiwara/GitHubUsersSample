@@ -6,6 +6,7 @@
     tools:context=".ui.fragment.UserDetailFragment">
 
     <data>
+        <import type="java.text.NumberFormat" />
         <variable
             name="viewModel"
             type="jp.sfujiwara.githubuserssample.ui.viewmodel.UserDetailViewModel" />
@@ -71,7 +72,7 @@
                         android:id="@+id/user_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="28dp"
+                        android:layout_marginStart="32dp"
                         android:text="@{viewModel.userDetail.name}"
                         android:textAppearance="?android:textAppearanceLarge"
                         android:textColor="@android:color/white"
@@ -86,7 +87,7 @@
                         android:id="@+id/user_company"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="28dp"
+                        android:layout_marginStart="32dp"
                         android:layout_marginTop="16dp"
                         android:text="@{viewModel.userDetail.company}"
                         android:textAppearance="?android:textAppearanceLarge"
@@ -100,7 +101,7 @@
                         android:id="@+id/user_location"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="28dp"
+                        android:layout_marginStart="32dp"
                         android:layout_marginTop="16dp"
                         android:text="@{viewModel.userDetail.location}"
                         android:textAppearance="?android:textAppearanceLarge"
@@ -138,7 +139,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:gravity="center"
-                            android:text="@{Integer.toString(viewModel.userDetail.following)}"
+                            android:text="@{NumberFormat.getNumberInstance().format(viewModel.userDetail.following)}"
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             android:textStyle="bold"
@@ -177,7 +178,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:gravity="center"
-                            android:text="@{Integer.toString(viewModel.userDetail.followers)}"
+                            android:text="@{NumberFormat.getNumberInstance().format(viewModel.userDetail.followers)}"
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             android:textStyle="bold"
