@@ -56,7 +56,7 @@ class FollowUserListFragment : BaseUserListFragment() {
 
         // RecyclerView表示用LiveDataの更新をAdapterに検知させる
         viewModel.userItems.observe(viewLifecycleOwner, Observer {
-            adapter.setData(it)
+            adapter.submitList(it)
         })
 
         // APIエラー表示用のSnaclbar

@@ -6,7 +6,6 @@ import jp.sfujiwara.githubuserssample.data.model.Repos
 import jp.sfujiwara.githubuserssample.data.model.Resource
 import jp.sfujiwara.githubuserssample.data.model.User
 import jp.sfujiwara.githubuserssample.data.repository.UserDetailRepository
-import jp.sfujiwara.githubuserssample.data.repository.UserListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -14,12 +13,16 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class UserDetailViewModel@Inject constructor(private val repository: UserDetailRepository): ViewModel() {
+class UserDetailViewModel @Inject constructor(private val repository: UserDetailRepository) :
+    ViewModel() {
 
     // SnackBar表示ようにLiveData
     val showMessageAction = MutableLiveData<String>()
     val userDetail = MutableLiveData<User>()
-    val reposItems = MutableLiveData<List<Repos>>()
+
+    private val reposRaw = mutableListOf<Repos>()
+    private val _reposItems = MutableLiveData<List<Repos>>(emptyList())
+    val reposItems: LiveData<List<Repos>> = _reposItems.distinctUntilChanged()
 
     private var isLoading = false
     private var isLoadAll = false
@@ -81,7 +84,7 @@ class UserDetailViewModel@Inject constructor(private val repository: UserDetailR
             //APIを非同期でキック
             val result = async(Dispatchers.IO) {
                 runCatching {
-                    repository.getUserRepos(login, 100, page)
+                    repository.getUserRepos(login, 10, page)
                 }
             }.await()
 
@@ -96,14 +99,8 @@ class UserDetailViewModel@Inject constructor(private val repository: UserDetailR
                             }
                             return@onSuccess
                         }
-                        if (!reposItems.value.isNullOrEmpty()) {
-                            // 既にデータがあれば結合する
-                            val last = reposItems.value!!.toMutableList()
-                            reposItems.value = last.plus(it.data.toMutableList())
-                        } else {
-                            // データがなければ代入
-                            reposItems.value = it.data!!
-                        }
+                        reposRaw.addAll(it.data.toMutableList())
+                        _reposItems.value = ArrayList(reposRaw)
                     } else if (it?.status == Resource.Status.NOT_FOUND) {
                         // すべて読み込んだと判定する
                         isLoadAll = true

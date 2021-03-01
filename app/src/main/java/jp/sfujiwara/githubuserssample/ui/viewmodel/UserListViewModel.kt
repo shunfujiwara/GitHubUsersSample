@@ -1,8 +1,6 @@
 package jp.sfujiwara.githubuserssample.ui.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.sfujiwara.githubuserssample.data.model.Resource
 import jp.sfujiwara.githubuserssample.data.model.User
@@ -14,12 +12,16 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class UserListViewModel@Inject constructor(private val repository: UserListRepository): ViewModel() {
+class UserListViewModel @Inject constructor(private val repository: UserListRepository) :
+    ViewModel() {
 
     // SnackBar表示ようにLiveData
     val showMessageAction = MutableLiveData<String>()
 
-    val userItems = MutableLiveData<List<User>>()
+    private val usersRaw = mutableListOf<User>()
+    private val _userItems = MutableLiveData<List<User>>(emptyList())
+    val userItems: LiveData<List<User>> = _userItems.distinctUntilChanged()
+
     private var isLoading = false
     private var isLoadAll = false
     private var lastId = 0
@@ -35,7 +37,7 @@ class UserListViewModel@Inject constructor(private val repository: UserListRepos
             //APIを非同期でキック
             val result = async(Dispatchers.IO) {
                 runCatching {
-                    repository.getUsers(100, lastId)
+                    repository.getUsers(10, lastId)
                 }
             }.await()
 
@@ -47,15 +49,9 @@ class UserListViewModel@Inject constructor(private val repository: UserListRepos
                             isLoadAll = true
                             return@onSuccess
                         }
-                        if (!userItems.value.isNullOrEmpty()) {
-                            // 既にデータがあれば結合する
-                            val last = userItems.value!!.toMutableList()
-                            userItems.value = last.plus(it.data.toMutableList())
-                        } else {
-                            // データがなければ代入
-                            userItems.value = it.data!!
-                        }
-                        lastId = userItems.value?.last()?.id ?: 0
+                        usersRaw.addAll(it.data.toMutableList())
+                        _userItems.value = ArrayList(usersRaw)
+                        lastId = usersRaw.last().id
                     } else if (it?.status == Resource.Status.NOT_FOUND) {
                         // すべて読み込んだと判定する
                         isLoadAll = true
