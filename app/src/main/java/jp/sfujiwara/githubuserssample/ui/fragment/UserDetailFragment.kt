@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.ChangeImageTransform
+import androidx.transition.ChangeTransform
+import androidx.transition.TransitionSet
 import coil.load
 import coil.transform.BlurTransformation
 import coil.transform.CircleCropTransformation
@@ -18,8 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.sfujiwara.githubuserssample.R
 import jp.sfujiwara.githubuserssample.data.model.Repos
 import jp.sfujiwara.githubuserssample.databinding.UserDetailFragmentBinding
-import jp.sfujiwara.githubuserssample.ui.activity.FollowUserListActivity
-import jp.sfujiwara.githubuserssample.ui.activity.FollowerUserListActivity
+import jp.sfujiwara.githubuserssample.ui.activity.MainActivity
 import jp.sfujiwara.githubuserssample.ui.adapter.OnCellClickListener
 import jp.sfujiwara.githubuserssample.ui.adapter.ReposListAdapter
 import jp.sfujiwara.githubuserssample.ui.view.MoreLoadRecyclerView
@@ -33,23 +36,13 @@ import jp.sfujiwara.githubuserssample.util.IntentUtil
 @AndroidEntryPoint
 class UserDetailFragment : BaseFragment(), OnCellClickListener<Repos> {
 
-    companion object {
-        private const val LOGIN = "login"
-        private const val AVATAR_URL = "avatar_url"
-        private const val TRANSITION_NAME = "transition_name"
-        fun newInstance(login: String, avatarUrl: String?, transitionName: String) =
-            UserDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(LOGIN, login)
-                    putString(AVATAR_URL, avatarUrl)
-                    putString(TRANSITION_NAME, transitionName)
-                }
-            }
-    }
-
     private val viewModel by viewModels<UserDetailViewModel>()
     private lateinit var binding: UserDetailFragmentBinding
     private val adapter = ReposListAdapter(arrayListOf(), this)
+    private val navArgs by navArgs<UserDetailFragmentArgs>()
+    override var screenName: String? = "User Detail"
+    override var showHomeEnabled = false
+    override var homeAsUpEnabled = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,29 +51,33 @@ class UserDetailFragment : BaseFragment(), OnCellClickListener<Repos> {
         binding = DataBindingUtil.inflate(inflater, R.layout.user_detail_fragment, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        (requireActivity() as MainActivity).supportActionBar?.hide()
 
-        binding.userThumbnailImage.transitionName = arguments?.getString(TRANSITION_NAME)
+        binding.userThumbnailImage.transitionName = navArgs.transitionName
         //Shared Element用にユーザー画像のみ前画面から流用する
-        arguments?.getString(AVATAR_URL)?.let {
-            binding.userThumbnailImage.load(it) {
-                transformations(CircleCropTransformation())
-            }
-            binding.backgroundImage.load(it) {
-                transformations(
-                    BlurTransformation(
-                        context = requireContext(),
-                        radius = 5f,
-                        sampling = 5f
-                    )
+        binding.userThumbnailImage.load(navArgs.avatarUrl) {
+            transformations(CircleCropTransformation())
+        }
+        binding.backgroundImage.load(navArgs.avatarUrl) {
+            transformations(
+                BlurTransformation(
+                    context = requireContext(),
+                    radius = 5f,
+                    sampling = 5f
                 )
+            )
+            //SharedElementアニメーション設定
+            val transition = TransitionSet().apply {
+                addTransition(ChangeTransform())
+                addTransition(ChangeImageTransform())
             }
+            sharedElementEnterTransition = transition
+            sharedElementReturnTransition = transition
         }
         viewInit()
 
-        arguments?.getString(LOGIN)?.let {
-            viewModel.init(it)
-            viewModel.getUserDetail()
-        }
+        viewModel.init(navArgs.login)
+        viewModel.getUserDetail()
 
         return binding.root
     }
@@ -122,13 +119,17 @@ class UserDetailFragment : BaseFragment(), OnCellClickListener<Repos> {
             showMessage(binding.root, it)
         })
 
-        arguments?.getString(LOGIN)?.let { login ->
-            binding.followParent.setOnClickListener(View.OnClickListener {
-                startActivity(FollowUserListActivity.createIntent(requireContext(), login))
-            })
-            binding.followerParent.setOnClickListener(View.OnClickListener {
-                startActivity(FollowerUserListActivity.createIntent(requireContext(), login))
-            })
-        }
+        binding.followParent.setOnClickListener(View.OnClickListener {
+            val action = UserDetailFragmentDirections.actionDetailToFollowing(
+                login = navArgs.login
+            )
+            findNavController().navigate(action)
+        })
+        binding.followerParent.setOnClickListener(View.OnClickListener {
+            val action = UserDetailFragmentDirections.actionDetailToFollower(
+                login = navArgs.login
+            )
+            findNavController().navigate(action)
+        })
     }
 }

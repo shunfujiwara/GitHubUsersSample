@@ -14,12 +14,10 @@ import jp.sfujiwara.githubuserssample.ui.viewmodel.UserListViewModel
 @AndroidEntryPoint
 class UserListFragment : BaseUserListFragment() {
 
-    companion object {
-        fun newInstance() =
-            UserListFragment()
-    }
-
     private val viewModel by viewModels<UserListViewModel>()
+    override var screenName: String? = "GitHub Users"
+    override var showHomeEnabled = false
+    override var homeAsUpEnabled = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +27,9 @@ class UserListFragment : BaseUserListFragment() {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
         viewModelInit()
-        viewModel.getUsers()
+        if (viewModel.userItems.value.isNullOrEmpty()) {
+            viewModel.getUsers()
+        }
         return view
     }
 
