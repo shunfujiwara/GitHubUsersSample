@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
-import jp.sfujiwara.githubuserssample.R
 import jp.sfujiwara.githubuserssample.ui.view.MoreLoadRecyclerView
 import jp.sfujiwara.githubuserssample.ui.viewmodel.FollowUserListViewModel
 
@@ -15,17 +15,11 @@ import jp.sfujiwara.githubuserssample.ui.viewmodel.FollowUserListViewModel
 @AndroidEntryPoint
 class FollowUserListFragment : BaseUserListFragment() {
 
-    companion object {
-        private const val LOGIN = "login"
-        fun newInstance(login: String) =
-            FollowUserListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(LOGIN, login)
-                }
-            }
-    }
-
     private val viewModel by viewModels<FollowUserListViewModel>()
+    private val navArgs by navArgs<FollowUserListFragmentArgs>()
+    override var screenName: String? = "Following"
+    override var showHomeEnabled = true
+    override var homeAsUpEnabled = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,14 +30,17 @@ class FollowUserListFragment : BaseUserListFragment() {
 
         viewModelInit()
 
-        val login = arguments?.getString(LOGIN)
-        if (login.isNullOrEmpty()) {
-            showMessage(binding.root, getString(R.string.error_message))
-        } else {
-            viewModel.init(login)
+        viewModel.init(navArgs.login)
+        if (viewModel.userItems.value.isNullOrEmpty()) {
             viewModel.getFollowUsers()
         }
         return view
+    }
+
+    override fun onResume() {
+        val login = navArgs.login
+        screenName = "$login Following"
+        super.onResume()
     }
 
     private fun viewModelInit() {

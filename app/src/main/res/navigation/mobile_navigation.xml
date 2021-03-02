@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/user_list">
+
+    <fragment
+        android:id="@+id/user_list"
+        android:name="jp.sfujiwara.githubuserssample.ui.fragment.UserListFragment"
+        android:label="UserListFragment"
+        tools:layout="@layout/user_list_fragment">
+
+        <action
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/user_detail">
+            <argument
+                android:name="login"
+                android:defaultValue='""' />
+            <argument
+                android:name="avatar_url"
+                android:defaultValue='""' />
+            <argument
+                android:name="transition_name"
+                android:defaultValue='""' />
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_detail"
+        android:name="jp.sfujiwara.githubuserssample.ui.fragment.UserDetailFragment"
+        android:label="UserDetailFragment"
+        tools:layout="@layout/user_detail_fragment">
+
+        <action
+            android:id="@+id/action_detail_to_following"
+            app:destination="@id/user_following">
+            <argument
+                android:name="login"
+                android:defaultValue='""' />
+        </action>
+
+        <action
+            android:id="@+id/action_detail_to_follower"
+            app:destination="@id/user_follower">
+            <argument
+                android:name="login"
+                android:defaultValue='""' />
+        </action>
+        <argument
+            android:name="login"
+            app:argType="string" />
+        <argument
+            android:name="avatar_url"
+            app:argType="string" />
+        <argument
+            android:name="transition_name"
+            app:argType="string" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/user_following"
+        android:name="jp.sfujiwara.githubuserssample.ui.fragment.FollowUserListFragment"
+        android:label="FollowUserListFragment"
+        tools:layout="@layout/user_list_fragment">
+
+        <action
+            android:id="@+id/action_following_to_detail"
+            app:destination="@id/user_detail">
+            <argument
+                android:name="login"
+                android:defaultValue='""' />
+            <argument
+                android:name="avatar_url"
+                android:defaultValue='""' />
+            <argument
+                android:name="transition_name"
+                android:defaultValue='""' />
+        </action>
+        <argument
+            android:name="login"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_follower"
+        android:name="jp.sfujiwara.githubuserssample.ui.fragment.FollowerUserListFragment"
+        android:label="FollowerFragment"
+        tools:layout="@layout/user_list_fragment">
+
+        <action
+            android:id="@+id/action_follower_to_detail"
+            app:destination="@id/user_detail">
+            <argument
+                android:name="login"
+                android:defaultValue='""' />
+            <argument
+                android:name="avatar_url"
+                android:defaultValue='""' />
+            <argument
+                android:name="transition_name"
+                android:defaultValue='""' />
+        </action>
+        <argument
+            android:name="login"
+            app:argType="string" />
+
+    </fragment>
+
+</navigation>
