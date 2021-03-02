@@ -46,7 +46,7 @@ class ReposListAdapter(
             is ViewReposListRowBinding ->
                 (holder.binding as ViewReposListRowBinding).also { it ->
                     it.repos = repos
-                    it.root.setOnClickListener(View.OnClickListener {
+                    it.clickArea.setOnClickListener(View.OnClickListener {
                         onCellClickListener.onClick(repos, null)
                     })
                 }

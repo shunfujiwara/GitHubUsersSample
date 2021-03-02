@@ -19,4 +19,8 @@
   <color name="color_dark_gray">#666666</color>
   <color name="user_image_mask">#50FF5722</color>
 
+  <color name="list_row_background">#fff</color>
+  <color name="list_text_title">#111</color>
+  <color name="list_text_sub">#666</color>
+
 </resources>

@@ -11,8 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:clickable="true"
-        android:background="?attr/selectableItemBackground"
+        android:background="@color/list_row_background"
         >
 
         <ImageView
@@ -30,7 +29,7 @@
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/list_text_title"
             android:textSize="16sp"
             android:textStyle="bold"
             android:maxLines="2"
@@ -41,6 +40,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
+
+        <View
+            android:id="@+id/click_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

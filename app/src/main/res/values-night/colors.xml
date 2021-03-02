@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="divider_color">#222</color>
+  <color name="list_row_background">#111</color>
+  <color name="list_text_title">#ddd</color>
+</resources>

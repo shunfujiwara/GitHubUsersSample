@@ -56,7 +56,7 @@ class UserListAdapter(
 
     private fun bindBigImageRow(user: User, binding: ViewUserListRowBinding, position: Int) {
         binding.user = user
-        binding.root.setOnClickListener(View.OnClickListener {
+        binding.clickArea.setOnClickListener(View.OnClickListener {
             onCellClickListener.onClick(user, binding.userThumbnailImage)
         })
         binding.userThumbnailImage.transitionName = position.toString()
