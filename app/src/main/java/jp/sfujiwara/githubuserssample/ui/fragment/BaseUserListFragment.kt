@@ -37,18 +37,18 @@ abstract class BaseUserListFragment : BaseFragment(), OnCellClickListener<User> 
         return binding.root
     }
 
-    override fun onClick(user: User, targetView: View?) {
+    override fun onClick(value: User, targetView: View?) {
         targetView?.let {
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 requireActivity(),
                 it,
                 it.transitionName
             )
-            user.login?.let {
+            value.login?.let {
                 val intent = UserDetailActivity.createIntent(
                     requireContext(),
                     it,
-                    user.avatarUrl,
+                    value.avatarUrl,
                     targetView.transitionName
                 )
                 startActivity(intent, options.toBundle())

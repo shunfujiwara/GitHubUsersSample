@@ -36,7 +36,7 @@ class UserDetailFragment : BaseFragment(), OnCellClickListener<Repos> {
         private const val LOGIN = "login"
         private const val AVATAR_URL = "avatar_url"
         private const val TRANSITION_NAME = "transition_name"
-        fun newInstance(login: String, avatarUrl: String?, transitionName: String) =
+        fun newInstance(login: String?, avatarUrl: String?, transitionName: String?) =
             UserDetailFragment().apply {
                 arguments = Bundle().apply {
                     putString(LOGIN, login)

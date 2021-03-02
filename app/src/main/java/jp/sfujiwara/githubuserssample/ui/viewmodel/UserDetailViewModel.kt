@@ -54,7 +54,10 @@ class UserDetailViewModel @Inject constructor(private val repository: UserDetail
                         if (it.data == null) {
                             return@onSuccess
                         }
-                        userDetail.value = it.data!!
+                        // 必ず真だがWarning回避のため
+                        it.data.let {
+                            userDetail.value = it
+                        }
                         getRepos()
 
                     } else if (it?.status == Resource.Status.NOT_FOUND) {

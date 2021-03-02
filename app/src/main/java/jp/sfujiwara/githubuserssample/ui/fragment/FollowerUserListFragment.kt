@@ -17,7 +17,7 @@ class FollowerUserListFragment : BaseUserListFragment() {
 
     companion object {
         private const val LOGIN = "login"
-        fun newInstance(login: String) =
+        fun newInstance(login: String?) =
             FollowerUserListFragment().apply {
                 arguments = Bundle().apply {
                     putString(LOGIN, login)

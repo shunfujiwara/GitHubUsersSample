@@ -27,7 +27,7 @@ class FollowerUserListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.follow_user_list_activity)
+        setContentView(R.layout.follower_user_list_activity)
         if (savedInstanceState == null) {
             val login = intent.getStringExtra(LOGIN)
 
