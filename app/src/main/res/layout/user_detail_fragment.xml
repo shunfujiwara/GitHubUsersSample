@@ -6,7 +6,9 @@
     tools:context=".ui.fragment.UserDetailFragment">
 
     <data>
+
         <import type="java.text.NumberFormat" />
+
         <variable
             name="viewModel"
             type="jp.sfujiwara.githubuserssample.ui.viewmodel.UserDetailViewModel" />
@@ -40,6 +42,7 @@
                         android:id="@+id/background_image"
                         android:layout_width="match_parent"
                         android:layout_height="320dp"
+                        android:contentDescription="@string/background_image"
                         android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +64,7 @@
                         android:layout_height="?android:actionBarSize"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="32dp"
+                        android:contentDescription="@string/user_thumbnail_image"
                         android:padding="4dp"
                         android:scaleType="centerCrop"
                         android:scaleX="2"
@@ -115,8 +119,8 @@
                         android:id="@+id/follow_parent"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
-                        android:clickable="true"
                         android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
                         app:layout_constraintBottom_toBottomOf="@+id/background_image"
                         app:layout_constraintEnd_toStartOf="@+id/follower_parent"
                         app:layout_constraintHorizontal_weight="0.5"
@@ -153,8 +157,8 @@
                         android:id="@+id/follower_parent"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
-                        android:clickable="true"
                         android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
                         app:layout_constraintBottom_toBottomOf="@+id/background_image"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="0.5"

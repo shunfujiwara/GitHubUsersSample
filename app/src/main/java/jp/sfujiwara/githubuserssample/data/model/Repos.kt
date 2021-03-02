@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName
  * Created by shn on 2021/02/27
  */
 data class Repos(
+    var id: Int = 0,
     @SerializedName("full_name") var fullName: String? = null,
     @SerializedName("html_url") var htmlUrl: String? = null,
     @SerializedName("description") var description: String? = null,

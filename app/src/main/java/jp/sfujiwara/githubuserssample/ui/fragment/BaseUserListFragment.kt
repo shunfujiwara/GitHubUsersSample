@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.sfujiwara.githubuserssample.R
@@ -23,7 +22,7 @@ import jp.sfujiwara.githubuserssample.ui.adapter.UserListAdapter
  */
 abstract class BaseUserListFragment : BaseFragment(), OnCellClickListener<User> {
 
-    protected val adapter = UserListAdapter(arrayListOf(), this)
+    protected val adapter = UserListAdapter(this)
     protected lateinit var binding: UserListFragmentBinding
 
     override fun onCreateView(
@@ -38,18 +37,18 @@ abstract class BaseUserListFragment : BaseFragment(), OnCellClickListener<User> 
         return binding.root
     }
 
-    override fun onClick(user: User, targetView: View?) {
+    override fun onClick(value: User, targetView: View?) {
         targetView?.let {
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 requireActivity(),
                 it,
                 it.transitionName
             )
-            user.login?.let {
+            value.login?.let {
                 val intent = UserDetailActivity.createIntent(
                     requireContext(),
                     it,
-                    user.avatarUrl,
+                    value.avatarUrl,
                     targetView.transitionName
                 )
                 startActivity(intent, options.toBundle())
@@ -59,6 +58,8 @@ abstract class BaseUserListFragment : BaseFragment(), OnCellClickListener<User> 
 
     private fun viewInit() {
         // アダプター設定
+        binding.recyclerview.setHasFixedSize(true)
+        adapter.setHasStableIds(true)
         binding.recyclerview.adapter = adapter
 
         // RecyclerViewのDivider

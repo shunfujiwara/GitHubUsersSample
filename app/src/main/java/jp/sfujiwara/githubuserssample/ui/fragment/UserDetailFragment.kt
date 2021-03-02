@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -37,7 +36,7 @@ class UserDetailFragment : BaseFragment(), OnCellClickListener<Repos> {
         private const val LOGIN = "login"
         private const val AVATAR_URL = "avatar_url"
         private const val TRANSITION_NAME = "transition_name"
-        fun newInstance(login: String, avatarUrl: String?, transitionName: String) =
+        fun newInstance(login: String?, avatarUrl: String?, transitionName: String?) =
             UserDetailFragment().apply {
                 arguments = Bundle().apply {
                     putString(LOGIN, login)
@@ -49,7 +48,7 @@ class UserDetailFragment : BaseFragment(), OnCellClickListener<Repos> {
 
     private val viewModel by viewModels<UserDetailViewModel>()
     private lateinit var binding: UserDetailFragmentBinding
-    private val adapter = ReposListAdapter(arrayListOf(), this)
+    private val adapter = ReposListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,7 +91,9 @@ class UserDetailFragment : BaseFragment(), OnCellClickListener<Repos> {
     }
 
     private fun viewInit() {
+        binding.recyclerview.setHasFixedSize(true)
         // アダプター設定
+        adapter.setHasStableIds(true)
         binding.recyclerview.adapter = adapter
 
         // RecyclerViewのDivider
@@ -114,7 +115,7 @@ class UserDetailFragment : BaseFragment(), OnCellClickListener<Repos> {
 
         // RecyclerView表示用LiveDataの更新をAdapterに検知させる
         viewModel.reposItems.observe(viewLifecycleOwner, Observer {
-            adapter.setData(it)
+            adapter.submitList(it)
         })
 
         // APIエラー表示用のSnaclbar

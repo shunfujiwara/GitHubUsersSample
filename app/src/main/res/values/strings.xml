@@ -11,5 +11,7 @@
   <string name="label_forks">Forks: &lt;strong&gt;%1$s&lt;/strong&gt;</string>
 
   <string name="error_message">予期せぬエラーが発生しました</string>
+    <string name="background_image">background_image</string>
+  <string name="user_thumbnail_image">user_thumbnail_image</string>
 
 </resources>

@@ -21,7 +21,6 @@ object IntentUtil{
         try {
             val intent = CustomTabsIntent.Builder()
                 .setShowTitle(true)
-                .enableUrlBarHiding()
                 .build()
             intent.intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.launchUrl(context, url.toUri())

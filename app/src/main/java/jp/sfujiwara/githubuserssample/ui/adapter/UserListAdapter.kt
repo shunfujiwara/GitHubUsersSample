@@ -2,63 +2,58 @@ package jp.sfujiwara.githubuserssample.ui.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jp.sfujiwara.githubuserssample.R
 import jp.sfujiwara.githubuserssample.data.model.User
 import jp.sfujiwara.githubuserssample.databinding.ViewUserListRowBinding
 import jp.sfujiwara.githubuserssample.ui.adapter.holder.BindingViewHolder
-import jp.sfujiwara.githubuserssample.ui.adapter.holder.RawViewHolder
 
 
 /**
  * Created by shn on 2021/02/26
  */
 class UserListAdapter(
-    private var items: List<User>,
     private var onCellClickListener: OnCellClickListener<User>
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    companion object {
-        private const val VIEW_TYPE_USER_LIST = 1
-    }
-
-    override fun getItemViewType(position: Int) = VIEW_TYPE_USER_LIST
+) : ListAdapter<User, RecyclerView.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            VIEW_TYPE_USER_LIST -> BindingViewHolder<ViewUserListRowBinding>(
-                parent, R.layout.view_user_list_row
-            )
-
-            else -> RawViewHolder.newInstance(parent)
-        }
+        return BindingViewHolder<ViewUserListRowBinding>(
+            parent, R.layout.view_user_list_row
+        )
     }
 
-    override fun getItemCount() = items.size
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is RawViewHolder) {
-            return
-        }
-        val user = items[position]
+        val user = getItem(position)
         when ((holder as BindingViewHolder<*>).binding) {
             is ViewUserListRowBinding ->
                 (holder.binding as ViewUserListRowBinding).also { it ->
-                    bindBigImageRow(user, it, position)
+                    bindUserRow(user, it, position)
                 }
         }
     }
 
-    fun setData(items: List<User>) {
-        this.items = items
-        notifyDataSetChanged()
+    override fun getItemId(position: Int): Long {
+        return getItem(position).id.toLong()
     }
 
-    private fun bindBigImageRow(user: User, binding: ViewUserListRowBinding, position: Int) {
+    private fun bindUserRow(user: User, binding: ViewUserListRowBinding, position: Int) {
         binding.user = user
         binding.root.setOnClickListener(View.OnClickListener {
             onCellClickListener.onClick(user, binding.userThumbnailImage)
         })
         binding.userThumbnailImage.transitionName = position.toString()
+        binding.executePendingBindings()
+    }
+
+    private object DiffCallback : DiffUtil.ItemCallback<User>() {
+        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem == newItem
+        }
     }
 }
