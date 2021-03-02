@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import jp.sfujiwara.githubuserssample.R
 import jp.sfujiwara.githubuserssample.data.model.Repos
 import jp.sfujiwara.githubuserssample.databinding.ViewReposListRowBinding
-import jp.sfujiwara.githubuserssample.databinding.ViewUserListRowBinding
 import jp.sfujiwara.githubuserssample.ui.adapter.holder.BindingViewHolder
 import jp.sfujiwara.githubuserssample.ui.adapter.holder.RawViewHolder
 

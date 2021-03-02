@@ -22,13 +22,25 @@ interface ApiClient {
     suspend fun getUserDetail(@Path("login") name: String?): Response<User>
 
     @GET("/users/{login}/repos")
-    suspend fun getUserRepos(@Path("login") name: String?, @Query("per_page") perPage: Int, @Query("page") page: Int): Response<List<Repos>>
+    suspend fun getUserRepos(
+        @Path("login") name: String?,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
+    ): Response<List<Repos>>
 
     @GET("/users/{login}/following")
-    suspend fun getFollowUsers(@Path("login") name: String?, @Query("per_page") perPage: Int, @Query("page") page: Int): Response<List<User>>
+    suspend fun getFollowUsers(
+        @Path("login") name: String?,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
+    ): Response<List<User>>
 
 
     @GET("/users/{login}/followers")
-    suspend fun getFollowerUsers(@Path("login") name: String?, @Query("per_page") perPage: Int, @Query("page") page: Int): Response<List<User>>
+    suspend fun getFollowerUsers(
+        @Path("login") name: String?,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
+    ): Response<List<User>>
 
 }

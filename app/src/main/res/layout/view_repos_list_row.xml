@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="java.text.NumberFormat" />
+
         <import type="android.text.Html" />
+
         <import type="android.view.View" />
 
         <variable
@@ -17,21 +20,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:clickable="true"
         android:background="?attr/selectableItemBackground"
-        >
+        android:clickable="true">
 
         <TextView
             android:id="@+id/repos_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="@{repos.fullName}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:maxLines="2"
-            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/repos_watch_count"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,11 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@{Html.fromHtml(String.format(@string/label_lang, repos.language))}"
             android:textColor="@color/color_dark_gray"
             android:textSize="14sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             android:visibility="@{(repos.language == null || repos.language == &quot;null&quot;)? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toStartOf="@+id/repos_watch_count"
             app:layout_constraintStart_toStartOf="parent"

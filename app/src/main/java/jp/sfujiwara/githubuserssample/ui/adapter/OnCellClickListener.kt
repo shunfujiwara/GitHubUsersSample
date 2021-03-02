@@ -1,7 +1,6 @@
 package jp.sfujiwara.githubuserssample.ui.adapter
 
 import android.view.View
-import jp.sfujiwara.githubuserssample.data.model.User
 
 
 /**

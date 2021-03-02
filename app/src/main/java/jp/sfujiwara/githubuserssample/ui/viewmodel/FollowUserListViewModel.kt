@@ -7,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.sfujiwara.githubuserssample.data.model.Resource
 import jp.sfujiwara.githubuserssample.data.model.User
 import jp.sfujiwara.githubuserssample.data.repository.FollowUserRepository
-import jp.sfujiwara.githubuserssample.data.repository.UserListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -15,7 +14,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class FollowUserListViewModel@Inject constructor(private val repository: FollowUserRepository): ViewModel() {
+class FollowUserListViewModel @Inject constructor(private val repository: FollowUserRepository) :
+    ViewModel() {
 
     // SnackBar表示ようにLiveData
     val showMessageAction = MutableLiveData<String>()

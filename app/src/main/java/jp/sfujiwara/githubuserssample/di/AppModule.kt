@@ -73,8 +73,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideImageLoader(@ApplicationContext context: Context,
-                           client: OkHttpClient) : ImageLoader {
+    fun provideImageLoader(
+        @ApplicationContext context: Context,
+        client: OkHttpClient
+    ): ImageLoader {
         val imageLoader = ImageLoader.Builder(context)
             .crossfade(true)
             .okHttpClient {

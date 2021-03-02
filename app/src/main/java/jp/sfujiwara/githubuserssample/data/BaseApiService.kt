@@ -28,7 +28,8 @@ abstract class BaseApiService {
     }
 
     private fun <T> error(errorBody: ResponseBody?): Resource<T> {
-        val errorResponse = Gson().fromJson<ErrorResponse>(errorBody?.string(), ErrorResponse::class.java)
+        val errorResponse =
+            Gson().fromJson<ErrorResponse>(errorBody?.string(), ErrorResponse::class.java)
         return Resource.error(errorResponse.error ?: "通信中にエラーが発生しました。")
     }
 }

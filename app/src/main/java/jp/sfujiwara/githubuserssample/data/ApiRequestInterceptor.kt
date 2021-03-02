@@ -27,6 +27,6 @@ class ApiRequestInterceptor @Inject constructor() : Interceptor {
 
         Timber.d("Code = ${response.code()}")
 
-        return  response
+        return response
     }
 }
