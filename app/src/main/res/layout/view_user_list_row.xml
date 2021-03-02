@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="user"
             type="jp.sfujiwara.githubuserssample.data.model.User" />
@@ -11,36 +12,33 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:clickable="true"
         android:background="?attr/selectableItemBackground"
-        >
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/user_thumbnail_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="16dp"
-            app:load_circleImage="@{user.avatarUrl}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:load_circleImage="@{user.avatarUrl}" />
 
         <TextView
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@={user.login}"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:text="@={user.login}"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/user_thumbnail_image"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintStart_toEndOf="@id/user_thumbnail_image"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

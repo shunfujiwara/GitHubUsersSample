@@ -1,12 +1,13 @@
 package jp.sfujiwara.githubuserssample.ui.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.sfujiwara.githubuserssample.data.model.Repos
 import jp.sfujiwara.githubuserssample.data.model.Resource
 import jp.sfujiwara.githubuserssample.data.model.User
 import jp.sfujiwara.githubuserssample.data.repository.UserDetailRepository
-import jp.sfujiwara.githubuserssample.data.repository.UserListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -14,7 +15,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class UserDetailViewModel@Inject constructor(private val repository: UserDetailRepository): ViewModel() {
+class UserDetailViewModel @Inject constructor(private val repository: UserDetailRepository) :
+    ViewModel() {
 
     // SnackBar表示ようにLiveData
     val showMessageAction = MutableLiveData<String>()

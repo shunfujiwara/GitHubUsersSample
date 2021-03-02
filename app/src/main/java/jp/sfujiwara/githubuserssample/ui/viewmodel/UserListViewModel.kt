@@ -14,7 +14,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class UserListViewModel@Inject constructor(private val repository: UserListRepository): ViewModel() {
+class UserListViewModel @Inject constructor(private val repository: UserListRepository) :
+    ViewModel() {
 
     // SnackBar表示ようにLiveData
     val showMessageAction = MutableLiveData<String>()
